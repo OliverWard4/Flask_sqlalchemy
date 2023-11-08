@@ -1,11 +1,11 @@
 from flask import Flask, abort, redirect, render_template, request
 
 from src.repositories.movie_repository import movie_repository_singleton 
-from src.models import db
+from src.models import db, Movie
 app = Flask(__name__)
 
 # TODO: DB connection
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:40+Wallets@localhost/itsc3155'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:password@localhost:3306/itsc3155'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
@@ -39,7 +39,8 @@ def create_movie():
     if title == '' or director == '' or rating < 1 or rating > 5:
         abort(400)
     created_movie = movie_repository_singleton.create_movie(title, director, rating)
-    return redirect(f'/movies/{{created_movie.movie_id}}')
+    # print(created_movie)
+    return redirect(f'/movies/{created_movie.movie_id}')
 
 
 @app.get('/movies/search')
@@ -48,4 +49,6 @@ def search_movies():
     q = request.args.get('q', '')
     if q != '':
         found_movies = movie_repository_singleton.search_movies(q)
+        # for m in found_movies:
+        #     print (m)
     return render_template('search_movies.html', search_active=True, movies=found_movies, search_query=q)

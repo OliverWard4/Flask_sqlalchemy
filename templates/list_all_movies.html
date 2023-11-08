@@ -5,6 +5,9 @@
 {% block body %}
 <h1 class="mb-5">All Movies</h1>
 <p class="mb-3">See our list of movie ratings below</p>
+<!-- {% if movies|length == 0 %}
+    <h5>There are no movies avaliable. Try creating some movie rankings!</h5>
+    {% else %} -->
 <table class="table">
   <thead>
     <tr>
@@ -16,18 +19,17 @@
   <tbody>
     <!-- TODO - Render movies in a table with a link on the title to the individual movie page -->
     
-    {% if movies|length == 0%}
-    <h5>There are no movies avaliable. Try creating some movie rankings!</h5>
-    {% else %}
+    
     {% for movie in movies %}
     <tr>
-      <td><a href="/movies/{{ movie.movie_id }}">{{ movie.title }}</a></td>
+      <td><a href="/movies/{{movie.movie_id}}">{{ movie.title }}</a></td>
       <td>{{ movie.director }}</td>
       <td>{{ movie.rating }}</td>
     </tr>
     {% endfor %}
-    {% endif %}
+    
 
   </tbody>
 </table>
+<!-- {% endif %} -->
 {% endblock %}

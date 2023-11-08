@@ -3,10 +3,18 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-class ItemModel(db.Model):
+class Movie(db.Model):
     __tablename__ = "movie"  
 
     movie_id = db.Column(db.Integer, primary_key=True)  # change the collums names to the ones mentioned in movies sql file
-    title = db.Column(db.String(80), unique=True, nullable=False)
-    director = db.Column(db.Float(precision=2), unique=False, nullable=False)
+    title = db.Column(db.String(255), unique=True, nullable=False)
+    director = db.Column(db.String(255), unique=False, nullable=False)
     rating = db.Column(db.Integer, unique=False, nullable=False)
+
+    def __init__(self, title: str, director: str, rating: int) -> None:
+        self.title = title
+        self.director = director
+        self.rating = rating
+
+    def __repr__(self) -> str:
+        return f'Movie (title = {self.title})'
